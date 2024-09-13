@@ -1,0 +1,46 @@
+header {
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid #ffbc81;
+    background-color: #063455;
+}
+
+header .text-center {
+    color: #ffbc81;
+    text-shadow: 2px 2px 1px rgba(255, 188, 129, 0.2);
+}
+
+header .btn {
+    background-color: #ffbc81;
+    color: #052237;
+    border: none;
+    transition: 0.15s ease-in-out;
+    font-weight: bold;
+}
+
+header .btn:hover {
+    background-color: #10aedb;
+    color: #ffbc81;
+}
+
+
+header .input {
+    width: 500px;
+    display: flex;
+    border: none;
+}
+
+header .form-control {
+    width: 100%;
+    margin-right: 20px;
+
+}
+
+
+/* header .cart {
+    height: 50px;
+    width: 50px;
+    background-color: aliceblue;
+} */

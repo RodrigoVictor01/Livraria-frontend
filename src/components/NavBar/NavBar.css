@@ -1,0 +1,20 @@
+.navBar .container-fluid {
+    padding: 0;
+    margin: 0;
+}
+
+.navBar ul {
+    display: flex;
+    flex: 1;
+}
+
+#navbarNav ul li a {
+    color: #ffbc81;
+    font-weight: bold;
+    text-shadow: 2px 2px 1px rgba(255, 188, 129, 0.2);
+    transition: all 0.15s ease-in-out;
+}
+
+#navbarNav ul li a:hover {
+    color: #10aedb;
+}
