@@ -5,10 +5,19 @@ import Header from '../components/Header/Header';
 import BooksCatalog from '../components/Catalog/BooksCatalog';
 import Swal from 'sweetalert2';
 
+
 const loginSuccess = () => {
     Swal.fire({
         title: "Login bem sucesido!",
         icon: "success"
+    });
+}
+
+const loginFailed = () => {
+    Swal.fire({
+        title: "E-mail ou senha incorretos!",
+        text: "Por favor, tente novamente",
+        icon: "error"
     });
 }
 
@@ -22,7 +31,7 @@ const Login = () => {
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const urlLogin = `${apiUrl}login/`;
@@ -46,15 +55,30 @@ const Login = () => {
                 const token = data.access
 
                 if (token) {
+                    const now = new Date().getTime();
+                    const expirationTime = now + 25 * 60 * 1000;
                     localStorage.setItem('token', token);
+                    localStorage.setItem('expirationTime', expirationTime.toString());
+
+                    setTimeout(() => {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('expirationTime');
+                        Swal.fire({
+                            title: 'Sessão expirada',
+                            text: 'Por favor, faça login novamente',
+                            icon: 'warning',
+                        }).then(() => navigate('/login'));
+                    }, 25 * 60 * 1000);
+
                     loginSuccess();
-                    navigate('/carrinho');
+                    navigate('/catalogo');
                 }
                 else {
                     console.log('Token não gerado');
                 }
             }
             else {
+                loginFailed();
                 console.error('Credenciais inválidas');
             }
 
@@ -70,44 +94,45 @@ const Login = () => {
         setIsSearchTriggered(true);
     };
 
+
     return (
         <>
             <Header onSearch={handleSearchTriggered} />
             {isSearchTriggered ? (
                 <BooksCatalog />
             ) : (
-                <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className='d-flex justify-content-center align-items-center vh-100'>
                     <Card style={{ width: '25rem', padding: '2rem' }}>
-                        <h3 className="text-center mb-4">Fazer login</h3>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId="formEmail" className="mb-3">
+                        <h3 className='text-center mb-4'>Fazer login</h3>
+                        <Form onSubmit={handleLogin}>
+                            <Form.Group controlId='formEmail' className='mb-3'>
                                 <Form.Label>E-mail</Form.Label>
                                 <Form.Control
-                                    type="email"
-                                    placeholder="Digite seu e-mail"
+                                    type='email'
+                                    placeholder='Digite seu e-mail'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="formPassword" className="mb-3">
+                            <Form.Group controlId='formPassword' className='mb-3'>
                                 <Form.Label>Senha</Form.Label>
                                 <Form.Control
-                                    type="password"
-                                    placeholder="Digite sua senha"
+                                    type='password'
+                                    placeholder='Digite sua senha'
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" className="w-100 mb-3">
+                            <Button variant='primary' type='submit' className='w-100 mb-3'>
                                 Continuar
                             </Button>
                             <hr />
 
-                            <div className="text-center mt-3">
+                            <div className='text-center mt-3'>
                                 <small>
                                     Não tem uma conta?{' '}
                                     <span

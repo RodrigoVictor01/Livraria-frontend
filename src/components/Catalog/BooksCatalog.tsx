@@ -12,8 +12,8 @@ import './BooksCatalog.css';
 
 export const bookAdded = (bookTitle: string) => {
     Swal.fire({
-        position: "top-end",
-        icon: "success",
+        position: 'top-end',
+        icon: 'success',
         title: bookTitle,
         showConfirmButton: false,
         timer: 1500,
@@ -34,7 +34,6 @@ const BooksCatalog: React.FC = () => {
     const handleAddToCart = (book: any) => {
         addToCart(book);
         bookAdded(`<strong>${book.volumeInfo.title}</strong> foi adicionado ao carrinho`);
-        console.log('Adicionar ao carrinho:', book);
     };
 
     return (

@@ -5,6 +5,7 @@ import Header from '../components/Header/Header';
 import { useState, useEffect } from 'react';
 import BooksCatalog from '../components/Catalog/BooksCatalog';
 import { useNavigate } from 'react-router-dom';
+import { alertError } from '../pages/CheckoutPage';
 
 const Cart = () => {
     const { cart, setCart } = useCart();
@@ -12,18 +13,21 @@ const Cart = () => {
     const navigate = useNavigate();
     const [isSearchTriggered, setIsSearchTriggered] = useState(false);
 
-    // Carrega o carrinho salvo no localStorage
     useEffect(() => {
         const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
+        if (savedCart && JSON.parse(savedCart).length > 0) {
             setCart(JSON.parse(savedCart));
         }
     }, [setCart]);
 
 
-    // Salva o carrinho no localStorage
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
+        if (cart.length > 0) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        else {
+            localStorage.removeItem('cart');
+        }
     }, [cart]);
 
 
@@ -60,8 +64,13 @@ const Cart = () => {
 
 
     const handleCheckout = () => {
-        // Navegar para uma página de checkout ou processar a compra
-        console.log('Finalizar Compra');
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alertError('Você não está logado', 'Por favor, faça login ou cadastre-se para finalizar a compra');
+            navigate('/login');
+            return;
+        }
         navigate('/checkout');
     };
 

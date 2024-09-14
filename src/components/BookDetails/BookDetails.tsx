@@ -5,6 +5,7 @@ import { getBookDetails } from '../../services/RequestsService';
 import formatDate from '../../functions/formatDate';
 import { useCart } from '../../context/CartContext';
 import { bookAdded } from '../Catalog/BooksCatalog';
+import formatPrice from '../../functions/formatPrice';
 
 type BookDetail = {
     title: string;
@@ -91,7 +92,7 @@ const BookDetails = () => {
             id: id!,
             quantity: 1,
             saleInfo: {
-                listPrice: { amount: 0 },
+                listPrice: { amount: selectedBook.saleInfo.listPrice?.amount },
                 saleability: selectedBook.saleInfo.saleability
             },
             volumeInfo: {
@@ -124,38 +125,33 @@ const BookDetails = () => {
         return (
             <Container
                 fluid
-                className="d-flex justify-content-center align-items-center"
+                className='d-flex justify-content-center align-items-center'
                 style={{ height: '100vh' }}>
-                <Spinner animation="border" role="status">
-                    <span className="sr-only">Carregando...</span>
+                <Spinner animation='border' role='status'>
+                    <span className='sr-only'>Carregando...</span>
                 </Spinner>
             </Container>
         );
     }
 
-
     if (error) {
-        return <p className="text-center text-danger">{error}</p>;
+        return <p className='text-center text-danger'>{error}</p>;
     }
     if (!book) return <p>Detalhes do livro não disponíveis</p>;
 
-
     return (
         <>
-            <Container className="mt-5">
+            <Container className='mt-5'>
                 <Row>
-
                     <Col md={4}>
                         <Image
                             src={book.imageLinks?.thumbnail || 'https://via.placeholder.com/150'}
                             alt={book.title}
                             fluid
-
                         />
                     </Col>
 
                     <Col md={8}>
-
                         <h2>{book.title}</h2>
                         <p><strong>Autor(es):</strong> {book.authors?.join(', ') || 'Desconhecido'}</p>
                         <p><strong>Publicadora:</strong> {book.publisher || 'Desconhecido'}</p>
@@ -163,14 +159,17 @@ const BookDetails = () => {
                         <p><strong>Número de páginas:</strong> {book.pageCount || 'Não informado'}</p>
                         <strong>Sinopse:</strong>
                         <div dangerouslySetInnerHTML={{ __html: book.description || 'Não disponível' }} />
-
+                        <p><strong>Preço: </strong>
+                            {book.saleInfo.listPrice?.amount !== undefined ?
+                                `R$ ${formatPrice(book.saleInfo.listPrice.amount)}`
+                                : 'Preço não disponível'}
+                        </p>
                     </Col>
-
                 </Row>
-                <Row className="m-5">
-                    <Col className="d-flex justify-content-center">
+                <Row className='m-5'>
+                    <Col className='d-flex justify-content-center'>
                         {book.saleInfo.saleability === 'NOT_FOR_SALE' ?
-                            <Button variant='secondary ' className='m-2 disabled'>
+                            <Button variant='secondary' className='m-2 disabled'>
                                 Adicionar ao Carrinho
                             </Button> :
                             <Button variant='secondary' onClick={() => handleAddToCart(book)} className='m-2'>
@@ -182,5 +181,4 @@ const BookDetails = () => {
         </>
     );
 };
-
 export default BookDetails;

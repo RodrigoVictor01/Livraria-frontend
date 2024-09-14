@@ -8,18 +8,16 @@ import Swal from 'sweetalert2';
 const registerSuccess = (successMessage: string) => {
     Swal.fire({
         title: successMessage,
-        icon: "success"
+        icon: 'success'
     });
 }
 
 const registerFailed = (errorMessage: string) => {
     Swal.fire({
         title: errorMessage,
-        icon: "error"
+        icon: 'error'
     });
 }
-
-
 
 const RegisterPage = () => {
 
@@ -58,7 +56,6 @@ const RegisterPage = () => {
         }
     };
 
-
     const handleCepBlur = async () => {
         const cep = formData.cep.replace(/\D/g, '');
 
@@ -90,8 +87,6 @@ const RegisterPage = () => {
             setCepError('CEP inválido');
         }
     };
-
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -145,92 +140,92 @@ const RegisterPage = () => {
             {isSearchTriggered ? (
                 <BooksCatalog />
             ) : (
-                <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className='d-flex justify-content-center align-items-center vh-100'>
                     <Card style={{ width: '30rem', padding: '2rem' }}>
-                        <h3 className="text-center mb-4">Cadastre-se</h3>
+                        <h3 className='text-center mb-4'>Cadastre-se</h3>
                         <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId="formNome" className="mb-3">
+                            <Form.Group controlId='formNome' className='mb-3'>
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control
-                                    type="text"
-                                    name="name"
-                                    placeholder="Digite seu nome"
+                                    type='text'
+                                    name='name'
+                                    placeholder='Digite seu nome'
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="formEmail" className="mb-3">
+                            <Form.Group controlId='formEmail' className='mb-3'>
                                 <Form.Label>E-mail</Form.Label>
                                 <Form.Control
-                                    type="email"
-                                    name="email"
-                                    placeholder="Digite seu e-mail"
+                                    type='email'
+                                    name='email'
+                                    placeholder='Digite seu e-mail'
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="formSenha" className="mb-3">
+                            <Form.Group controlId='formSenha' className='mb-3'>
                                 <Form.Label>Senha</Form.Label>
                                 <Form.Control
-                                    type="password"
-                                    name="password"
-                                    placeholder="Digite sua senha"
+                                    type='password'
+                                    name='password'
+                                    placeholder='Digite sua senha'
                                     value={formData.password}
                                     onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="formRepetirSenha" className="mb-3">
+                            <Form.Group controlId='formRepetirSenha' className='mb-3'>
                                 <Form.Label>Repetir Senha</Form.Label>
                                 <Form.Control
-                                    type="password"
-                                    name="confirmPassword"
-                                    placeholder="Repita sua senha"
+                                    type='password'
+                                    name='confirmPassword'
+                                    placeholder='Repita sua senha'
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
                                     required
                                 />
                                 {password !== confirmPassword && password.length >= 4 &&
-                                    <small className="text-danger">{'Senhas não correspondem'}</small>}
+                                    <small className='text-danger'>{'Senhas não correspondem'}</small>}
                             </Form.Group>
 
-                            <Form.Group controlId="formCep" className="mb-3">
+                            <Form.Group controlId='formCep' className='mb-3'>
                                 <Form.Label>CEP</Form.Label>
                                 <Form.Control
-                                    type="text"
-                                    name="cep"
-                                    placeholder="Digite seu CEP"
+                                    type='text'
+                                    name='cep'
+                                    placeholder='Digite seu CEP'
                                     value={formData.cep}
                                     onChange={handleChange}
                                     onBlur={handleCepBlur}
                                     maxLength={9}
                                     required
                                 />
-                                {cepError && <small className="text-danger">{cepError}</small>}
+                                {cepError && <small className='text-danger'>{cepError}</small>}
                             </Form.Group>
 
-                            <Form.Group controlId="formEndereco" className="mb-3">
+                            <Form.Group controlId='formEndereco' className='mb-3'>
                                 <Form.Label>Endereço</Form.Label>
                                 <Form.Control
-                                    type="text"
-                                    name="address"
-                                    placeholder="Endereço será preenchido automaticamente"
+                                    type='text'
+                                    name='address'
+                                    placeholder='Endereço será preenchido automaticamente'
                                     value={formData.address}
                                     onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" className="w-100 mb-3">
+                            <Button variant='primary' type='submit' className='w-100 mb-3'>
                                 Continuar
                             </Button>
 
-                            <div className="text-center mt-3">
+                            <div className='text-center mt-3'>
                                 <small>
                                     Já tem uma conta?{' '}
                                     <span

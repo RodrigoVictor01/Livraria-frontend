@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.6.0",
     "bootstrap": "^5.3.3",
     "dotenv-webpack": "^8.1.0",
+    "pdfmake": "^0.2.12",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@types/node": "^22.5.4",
+    "@types/pdfmake": "^0.2.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

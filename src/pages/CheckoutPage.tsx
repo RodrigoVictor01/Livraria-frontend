@@ -1,7 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Container, ListGroup, Button, Image } from 'react-bootstrap';
-import formatPrice from '../functions/formatPrice'; // Supondo que você tenha uma função para formatar o preço
+import formatPrice from '../functions/formatPrice';
 import { CartBook } from '../components/BookDetails/BookDetails';
+import { getUserData } from '../services/RequestsService';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+const purchaseSuccess = () => {
+    Swal.fire({
+        title: 'Compra realizada com sucesso!',
+        icon: 'success',
+    });
+}
+
+export const alertError = (title: string, text: string) => {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+    });
+}
 
 
 const Checkout = () => {
@@ -14,6 +32,7 @@ const Checkout = () => {
         }
     }, []);
 
+
     const totalCart = () => {
         return cart.reduce((total, book) => {
             const price = book.saleInfo?.listPrice?.amount || 0;
@@ -24,11 +43,23 @@ const Checkout = () => {
 
     const total = totalCart();
 
+
+
+    const navigate = useNavigate();
+
     const handlePurchase = async () => {
-        console.log('Compra realizada com sucesso!');
         const apiUrl = import.meta.env.VITE_API_URL;
+        const user = await getUserData();
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alertError('Você não está logado', 'Por favor, faça login ou cadastre-se para finalizar a compra');
+            navigate('/login');
+            return;
+        }
 
         const purchaseData = {
+            user: user.id,
             total_purchase: total,
             book_purchases: cart.map((book) => ({
                 book_id: book.id,
@@ -40,7 +71,7 @@ const Checkout = () => {
         };
 
         try {
-            const response = await fetch(`${apiUrl}purchases/`, {
+            const response = await fetch(`${apiUrl}purchase/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,23 +83,27 @@ const Checkout = () => {
             if (response.ok) {
                 setCart([]);
                 localStorage.removeItem('cart');
+                purchaseSuccess();
+                navigate('/');
             }
             else {
                 console.error('Erro ao realizar compra');
             }
 
+
         }
         catch (error) {
             console.error('Erro ao realizar compra', error);
         }
-        // console.log('Compra realizada com sucesso!', purchaseData);
+
     }
 
 
 
     return (
         <Container className="mt-5">
-            <h1 className="text-center text-secondary m-5">Checkout</h1>
+            <h2 className="text-center text-secondary m-5">Checkout</h2>
+            <h1 className="text-center text-secondary mb-5">Resumo do pedido</h1>
             {cart.length === 0 ? (
                 <p className="text-center">Seu carrinho está vazio</p>
             ) : (
@@ -99,9 +134,14 @@ const Checkout = () => {
                         <h4>Total: R$ {formatPrice(total)}</h4>
                     </div>
 
-                    <div className="text-end mt-3 mb-5">
+                    <div className="text-end mt-3 mb-3">
                         <Button variant="success border-0" onClick={handlePurchase}>
                             Finalizar pedido
+                        </Button>
+                    </div>
+                    <div className="text-end mt-3 mb-5">
+                        <Button variant="danger border-0" onClick={() => navigate('/')}>
+                            Cancelar
                         </Button>
                     </div>
                 </>
@@ -111,3 +151,4 @@ const Checkout = () => {
 };
 
 export default Checkout;
+

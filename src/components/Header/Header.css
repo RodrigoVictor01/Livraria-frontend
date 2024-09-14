@@ -39,8 +39,14 @@ header .form-control {
 }
 
 
-/* header .cart {
-    height: 50px;
-    width: 50px;
-    background-color: aliceblue;
-} */
+@media (max-width: 1020px) {
+    header .text-center {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    header .input {
+        width: 350px;
+    }
+}

@@ -18,3 +18,30 @@
 #navbarNav ul li a:hover {
     color: #10aedb;
 }
+
+
+@media (max-width: 1020px) {
+    .navbar-toggler {
+        background-color: #ffbc81;
+        border: none;
+    }
+
+    .navbar-collapse {
+        position: relative;
+        width: 100%;
+        text-align: center;
+        /* Centralizar os links */
+    }
+
+    .navbar-nav {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .navbar-toggler {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
