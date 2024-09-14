@@ -24,13 +24,23 @@ git clone https://github.com/RodrigoVictor01/Livraria-frontend
 cd livraria-frontend
 ```
 
-### 2. Instale as dependencias
+### 2. Instale as dependencias:
 
 ```bash
 npm install
 ```
 
-### 3.Execute o projeto:
+### 3. Como usar o `.env.example`:
+
+1. No diretório raiz do projeto, você encontrará o arquivo `.env.example`.
+2. Crie uma cópia desse arquivo e renomeie para `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+### 4. Execute o projeto:
+
+Certifique-se de estar rodando o backend para utilizar todas as funcionalidades
 
 ```bash
 npm run dev
