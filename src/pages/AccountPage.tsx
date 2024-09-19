@@ -6,6 +6,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar/NavBar';
+import formatDateISO from '../functions/formatDateISO';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -50,7 +51,7 @@ const generatePDF = (purchases: Purchase[]) => {
                     body: [
                         ['Data da Compra', 'Livros Comprados', 'Total da Compra'],
                         ...purchases.map(purchase => [
-                            new Date(purchase.created_at).toLocaleDateString(),
+                            formatDateISO(purchase.created_at),
                             purchase.book_purchases.map(book => `${book.title} - (${book.quantity}x)`).join('; \n'),
                             formatPrice(purchase.total_purchase)
                         ])
@@ -203,7 +204,7 @@ const Account = () => {
                                                     ))}
                                                 </ul>
                                                 <div className='mt-3'>
-                                                    <p><strong>Data da compra:</strong> {new Date(purchase.created_at).toLocaleDateString()}</p>
+                                                    <p><strong>Data da compra:</strong> {formatDateISO(purchase.created_at)}</p>
                                                     <p><strong>Total da compra:</strong> R$ {formatPrice(purchase.total_purchase)}</p>
                                                 </div>
                                             </li>
