@@ -8,7 +8,7 @@ export const getBooks = async (query?: string) => {
 
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: 'no-store' });
         const data = await response.json();
         return data;
     }

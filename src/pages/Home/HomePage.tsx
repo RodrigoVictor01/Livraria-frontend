@@ -6,16 +6,13 @@ import { Image } from 'react-bootstrap';
 import Livro1 from '../../assets/got.jpg';
 import Livro2 from '../../assets/maisSombio.jpeg';
 import Livro3 from '../../assets/divinaComedia.jpg';
-import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
     const [isSearchTriggered, setIsSearchTriggered] = useState(false);
-    const navigate = useNavigate();
 
     const handleSearchTriggered = () => {
         setIsSearchTriggered(true);
-        navigate('/catalogo');
     };
 
     return (
